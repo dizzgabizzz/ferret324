@@ -17,7 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ferret.Activity.MainActivity;
+
+import com.example.ferret.Activity.ProfileActivity;
 
 import java.util.Locale;
 
@@ -44,7 +45,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void showMain() {
-        Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent mIntent = new Intent(getApplicationContext(), ProjectActivity.class);
         startActivity(mIntent);
         finish();
     }
@@ -79,9 +80,10 @@ public class Login extends AppCompatActivity {
 
 
 
-        User mUser = new User(mStringEmail);
+        User mUser = new User(mStringEmail , Stringsenha );
 
         String mResult = UserDao.authenticateUser(mUser, getApplicationContext());
+        String mResult2 = UserDao.authenticateUser(mUser, getApplicationContext());
 
 //        mProgressBarLogin.setVisibility(View.GONE);
 
@@ -101,11 +103,19 @@ public class Login extends AppCompatActivity {
         mEditor.putString("username", mResult);
         mEditor.apply();
 
-        Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent mIntent = new Intent(getApplicationContext(), ProjectActivity.class);
         mIntent.putExtra("EXTRA_USER_NAME", mResult);
         startActivity(mIntent);
         finish();
+
+
+
+
+
     }
+
+
+
 
     public class ClickMyButtonLogin implements View.OnClickListener{
         @Override
@@ -176,3 +186,4 @@ public class Login extends AppCompatActivity {
         verifyLogged();
     }
 }
+

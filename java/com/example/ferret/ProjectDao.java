@@ -18,13 +18,19 @@ public class ProjectDao {
         String mSql;
         try{
 
-            mSql = " INSERT projeto (titulo, quat_membros, descricao, data_inicio, data_fim, status_projeto, foto_projeto, usuario_id) VALUES (?, ?, ?, ?, ? , 'ativo', ?, ?)";
+            mSql = "INSERT INTO projeto (titulo, quat_membros, descricao, data_inicio, data_fim, status_projeto, foto_projeto, usuario_id) VALUES (?, ?, ?, ?, ? , 'ativo', ?, ?)";
 
             PreparedStatement mPreparedStatement = MSSQLConnectionHelper.getConnection(mContext).prepareStatement(mSql);
 
             mPreparedStatement.setString(1,mProject.getTitulo());
             mPreparedStatement.setInt(2,mProject.getQuant_membros());
             mPreparedStatement.setString(3,mProject.getDescricao());
+            mPreparedStatement.setString(4,mProject.getData_inicio());
+            mPreparedStatement.setString(5,mProject.getData_fim());
+            mPreparedStatement.setString(6,mProject.getStatus_projeto());
+            mPreparedStatement.setLong(7,mProject.getFoto_projeto());
+            mPreparedStatement.setInt(8,mProject.getUsuario_id());
+
 
             vResponse = mPreparedStatement.executeUpdate();
         } catch (Exception e){
@@ -40,7 +46,7 @@ public class ProjectDao {
         String mSql;
 
         try{
-            mSql = "UPDATE projeto SET titulo=?, quant_membros=?, descricao=?, data_inicio=?, data_fim=?, foto_projeto=? WHERE id=?";
+            mSql = "UPDATE projeto SET titulo=?, quant_membros=?, descricao=?, data_inicio=?, data_fim=?,status_projeto=?, foto_projeto=? WHERE id=?";
             PreparedStatement mPreparedStatement = MSSQLConnectionHelper.getConnection(mContext).prepareStatement(mSql);
 
             mPreparedStatement.setString(1,mProject.getTitulo());
@@ -48,8 +54,9 @@ public class ProjectDao {
             mPreparedStatement.setString(3,mProject.getDescricao());
             mPreparedStatement.setString(4,mProject.getData_inicio());
             mPreparedStatement.setString(5,mProject.getData_fim());
-            mPreparedStatement.setByte(6,mProject.getFoto_projeto());
-            mPreparedStatement.setInt(7,mProject.getId());
+            mPreparedStatement.setLong(6,mProject.getFoto_projeto());
+            mPreparedStatement.setString(7,mProject.getStatus_projeto());
+            mPreparedStatement.setInt(8,mProject.getId());
 
 
         } catch (Exception e){
@@ -79,7 +86,7 @@ public class ProjectDao {
                         mResultSet.getString(5),
                         mResultSet.getString(6),
                         mResultSet.getString(7),
-                        mResultSet.getByte(8),
+                        mResultSet.getLong(8),
                         mResultSet.getInt(9)
                 ));
             }
@@ -89,11 +96,11 @@ public class ProjectDao {
         return mProjectList;
     }
 
-    public static List<Project> searchUsersByProject(String mTitulo , Context mContext){
+    public static List<Project> searchProjectByName(String mTitulo , Context mContext){
         List<Project> mProjectList = null;
         String mSql;
         try {
-            mSql = "SELECT id, titulo, quat_membros, descricao, data_inicio, data_fim, status_projeto, foto_projeto, usuario_id FROM project WHERE titulo LIKE '%" + mTitulo + " ORDER BY titulo ASC";
+            mSql = "SELECT id, titulo, quat_membros, descricao, data_inicio, data_fim, status_projeto, foto_projeto, usuario_id FROM project WHERE titulo LIKE '%" + mTitulo + "%' ORDER BY titulo ASC";
             PreparedStatement mPreparedStatement = MSSQLConnectionHelper.getConnection(mContext).prepareStatement(mSql);
             ResultSet mResultSet = mPreparedStatement.executeQuery();
             mProjectList = new ArrayList<Project>();
@@ -106,7 +113,7 @@ public class ProjectDao {
                         mResultSet.getString(5),
                         mResultSet.getString(6),
                         mResultSet.getString(7),
-                        mResultSet.getByte(8),
+                        mResultSet.getLong(8),
                         mResultSet.getInt(9)));
             }
         }catch (Exception e){

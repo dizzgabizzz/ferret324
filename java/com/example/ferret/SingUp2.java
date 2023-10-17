@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.example.ferret.util.TokenGenerator;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.Locale;
 
 public class SingUp2 extends AppCompatActivity {
@@ -30,8 +27,7 @@ public class SingUp2 extends AppCompatActivity {
     //private ProgressBar mProgressBar;
 
     private String mStringName, mStringEmail, mStringPassword, mStringnome_usuario;
-    private String mToken;
-    private String mTextMessage;
+
     private boolean isRequired(){
 
         if(TextUtils.isEmpty(mEditTextEmail.getText()) ||
@@ -73,18 +69,15 @@ public class SingUp2 extends AppCompatActivity {
         mStringName = String.valueOf(mEditTextUserName.getText());
         mStringEmail = String.valueOf(mEditTextEmail.getText()).toLowerCase(Locale.ROOT);
         mStringPassword = String.valueOf(mEditTextPassword.getText()).toString().trim();
-        mToken = String.valueOf(TokenGenerator.getRandomPositions());
         // mStringFullName = String.valueOf(mEditTextFullName.getText()).trim();
 
         //mProgressBar.setVisibility(View.VISIBLE);
 
-        User mUser = new User( mStringName ,  mStringEmail ,   mStringPassword,"Membro", "", "Ativo", "otp",System.currentTimeMillis(), mToken);
+        User mUser = new User( mStringName ,  mStringEmail ,   mStringPassword, "Membro", "", "Ativo");
 
-//        int vResult = UserDao.insertUser(mUser, getApplicationContext());
+        int vResult = UserDao.insertUser(mUser, getApplicationContext());
 
-        int vResult = UserDao.insertUserProfile(mUser, getApplicationContext());
-
-       // String mTextMessage;
+        String mTextMessage;
 
         // mProgressBar.setVisibility(View.GONE);
 
@@ -93,17 +86,11 @@ public class SingUp2 extends AppCompatActivity {
         }else {
 
             mTextMessage = getString(R.string.text_insert_success);
-
-            Snackbar mSnackbar = Snackbar.make(findViewById(R.id.layout_sign_up) , getString(R.string.text_message_token) + " : " + mToken , Snackbar.LENGTH_INDEFINITE).setTextMaxLines(4);
-
-            mSnackbar.setAction(getString(R.string.text_closed) , new ClickSnackBarListener());
-
-            mSnackbar.show();
         }
 
-//        Intent mIntent = new Intent(getApplicationContext() , Login.class);
-//        startActivity(mIntent);
-//        finish();
+        Intent mIntent = new Intent(getApplicationContext() , Login.class);
+        startActivity(mIntent);
+        finish();
 
     }
 
@@ -139,16 +126,5 @@ public class SingUp2 extends AppCompatActivity {
         mButtonSingUp = findViewById(R.id.button_sing_up);
         mButtonSingUp.setOnClickListener(new ClickMyButtonSingUp());
 
-    }
-
-    private class ClickSnackBarListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-
-            Toast.makeText(getApplicationContext() , mTextMessage, Toast.LENGTH_SHORT).show();
-            Intent mIntent = new Intent(SingUp2.this , Login.class);
-            startActivity(mIntent);
-            finish();
-        }
     }
 }

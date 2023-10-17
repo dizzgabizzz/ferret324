@@ -12,7 +12,7 @@ public class Project {
     private String data_inicio;
     private String data_fim;
     private String status_projeto;
-    private byte foto_projeto;
+    private Long foto_projeto;
     private int usuario_id;
 
 
@@ -72,11 +72,11 @@ public class Project {
         this.status_projeto = status_projeto;
     }
 
-    public byte getFoto_projeto() {
+    public Long getFoto_projeto() {
         return foto_projeto;
     }
 
-    public void setFoto_projeto(byte foto_projeto) {
+    public void setFoto_projeto(Long foto_projeto) {
         this.foto_projeto = foto_projeto;
     }
 
@@ -88,7 +88,7 @@ public class Project {
         this.usuario_id = usuario_id;
     }
 
-    public Project(int id, String titulo, int quant_membros, String descricao, String data_inicio, String data_fim, String status_projeto, byte foto_projeto, int usuario_id) {
+    public Project(int id, String titulo, int quant_membros, String descricao, String data_inicio, String data_fim, String status_projeto, Long foto_projeto, int usuario_id) {
         this.id = id;
         this.titulo = titulo;
         this.quant_membros = quant_membros;
@@ -100,7 +100,7 @@ public class Project {
         this.usuario_id = usuario_id;
     }
 
-    public Project(String titulo, int quant_membros, String descricao, String data_inicio, String data_fim, String status_projeto, byte foto_projeto, int usuario_id) {
+    public Project(String titulo, int quant_membros, String descricao, String data_inicio, String data_fim, String status_projeto, Long foto_projeto, int usuario_id) {
         this.titulo = titulo;
         this.quant_membros = quant_membros;
         this.descricao = descricao;

@@ -1,78 +1,66 @@
 package com.example.ferret.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.ferret.Login;
 import com.example.ferret.R;
 import com.example.ferret.SingUp2;
+import com.google.android.material.navigation.NavigationView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+//    Button ButtonBack;
+
+
+    TextView mTextViewUsername;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        ButtonBack();
-        ButtonLogout();
 
-    }
 
-    private void ButtonLogout() {
-        ConstraintLayout Logout=findViewById(R.id.Logout);
-        Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, Login.class));
+        mTextViewUsername = findViewById(R.id.textView8);
+
+        Intent mIntent = getIntent();
+        if(mIntent.hasExtra("EXTRA_USER_NAME")) {
+            mTextViewUsername.setText((mIntent.getStringExtra("EXTRA_USER_NAME")));
+
+
+
+//        ButtonBack = findViewById(R.id.back_home);
+//        ButtonBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//
+//            }
+//        });
+
+
             }
-        });
+
     }
 
-    private void ButtonBack() {
-        ConstraintLayout back_home=findViewById(R.id.back_home);
-        back_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-            }
-        });
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
-
-    public void Logout(View view){
-        logoutMenu(ProfileActivity.this);
-    }
-
-    private void logoutMenu (ProfileActivity profileActivity){
-        AlertDialog.Builder builder = new AlertDialog.Builder(profileActivity);
-        builder.setTitle("Logout");
-        builder.setMessage("Are you sure you want to logout ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        builder.show();
-    }
-
 }
 
 
